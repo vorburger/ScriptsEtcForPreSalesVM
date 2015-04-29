@@ -14,7 +14,7 @@ apt-get update && $minimal_apt_get_install \
 	nano \
 	psmisc \
 	unzip \
-	openjdk-7-jdk
+   && apt-get autoremove && apt-get autoclean
 
 ## Fix locale.
 # $minimal_apt_get_install language-pack-en
@@ -27,7 +27,12 @@ apt-get update && $minimal_apt_get_install \
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 
-# Run Hudson once during image creation, so that it's faster first time
+# Now the real stuff.. ;-)
+mkdir /root/Jenkins
+# curl -L http://mirrors.jenkins-ci.org/war/latest/jenkins.war -o /root/Jenkins/jenkins.war 
+mv /build/Downloads/jenkins.war /root/Jenkins/jenkins.war
+
+# Run Hudson once during image creation, so that it's faster first time?
 # RUN java -jar hudson.war
 
 rm -rf /build
