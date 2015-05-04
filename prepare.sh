@@ -11,13 +11,6 @@ export LC_ALL=C
 # echo -n en_US.UTF-8 > /etc/container_environment/LANG
 # echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
 
-# Set up Jenkins
-mkdir /root/Jenkins
-mv /build/Downloads/jenkins.war /root/Jenkins/jenkins.war
-mv /build/Common/Jenkins /root/.jenkins
-# Run Hudson once during image creation, so that it's faster first time?
-# RUN java -jar hudson.war
-
 # Set up Maven
 mv /build/Common/Maven/settings.xml /root/apache-maven-3.3.3/conf/
 # Set up Maven repository
@@ -43,10 +36,11 @@ svn import --username developer1 --password developer1 /tmp/ProjectsFromTemplate
 	file://$PWD/DemoSVNServer/t24-packager-tafj/ \
 	-m "Initial commit of projects created from t24-packager-tafj template"
 
+# Set up Jenkins
+mkdir /root/Jenkins
+mv /build/Downloads/jenkins.war /root/Jenkins/jenkins.war
+mv /build/Common/Jenkins /root/.jenkins
+
 # Set up Supervisor
 mkdir -p /var/log/supervisor
 cp /build/Common/Supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Clean up
-rm -rf /build
-rm -rf /tmp/* /var/tmp/*

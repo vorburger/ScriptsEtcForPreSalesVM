@@ -29,7 +29,7 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <rootPOM>ft-modelbank-packager/module/pom.xml</rootPOM>
-  <goals>-o clean package -DtafjHome=/root/base_mb_t24brpdev_7/TAFJ</goals>
+  <goals>clean package -DtafjHome=/root/base_mb_t24brpdev_7/TAFJ</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <ignoreUpstremChanges>false</ignoreUpstremChanges>

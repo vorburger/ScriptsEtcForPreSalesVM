@@ -32,11 +32,13 @@ RUN DEBIAN_FRONTEND=noninteractive \
 COPY . /build
 ADD Downloads/apache-maven-3.3.3-bin.tar.gz /root/
 ADD Downloads/base_mb_t24brpdev_7.tar.gz /root/
+
 RUN /build/prepare.sh
+RUN /build/integrationtest.sh
+RUN rm -rf /build /tmp/* /var/tmp/*
 
 # TODO VOLUME for where the stuff to keep is
 
-# CMD ["java", "-jar", "/root/Jenkins/jenkins.war"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 EXPOSE 8080
