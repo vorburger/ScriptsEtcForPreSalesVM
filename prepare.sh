@@ -14,6 +14,8 @@ apt-get update && $minimal_apt_get_install \
 	nano \
 	psmisc \
 	unzip \
+	supervisor \
+	subversion \
    && apt-get autoremove && apt-get autoclean
 
 ## Fix locale.
@@ -27,14 +29,24 @@ apt-get update && $minimal_apt_get_install \
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 
-# Now the real stuff.. ;-)
+# Now finally the real stuff.. ;-)
+# Set up Jenkins
 mkdir /root/Jenkins
 # curl -L http://mirrors.jenkins-ci.org/war/latest/jenkins.war -o /root/Jenkins/jenkins.war 
 mv /build/Downloads/jenkins.war /root/Jenkins/jenkins.war
-
 # Run Hudson once during image creation, so that it's faster first time?
 # RUN java -jar hudson.war
 
+# Set up SVN
+cd /root/
+svnadmin create DemoSVNServer
+mv /build/Common/Subversion/svnserve.conf /root/DemoSVNServer/conf/
+mv /build/Common/Subversion/passwds /root/DemoSVNServer/conf/
+
+# Set up Supervisor
+mkdir -p /var/log/supervisor
+cp /build/Common/Supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Clean up
 rm -rf /build
 rm -rf /tmp/* /var/tmp/*
-

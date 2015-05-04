@@ -17,6 +17,6 @@ RUN /build/prepare.sh
 
 # TODO VOLUME for where the stuff to keep is
 
-CMD ["java", "-jar", "/root/Jenkins/jenkins.war"]
+# CMD ["java", "-jar", "/root/Jenkins/jenkins.war"]
+CMD ["/usr/bin/supervisord"]
 EXPOSE 8080
-

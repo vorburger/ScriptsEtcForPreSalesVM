@@ -2,9 +2,9 @@
 set -e
 set -x
 
-cd Downloads
+cd Downloads/
 wget -cN http://mirrors.jenkins-ci.org/war/latest/jenkins.war
-cd ..
+cd -
 
 docker build -t dsdemo .
 
