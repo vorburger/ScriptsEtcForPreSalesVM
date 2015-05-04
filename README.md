@@ -12,6 +12,9 @@ NOTE: You probably do *NOT* mean to "docker run" again, as that will create _ano
 
 Inspired parially by https://github.com/phusion/baseimage-docker
 
+Caveat emptor: The documentation and scripts in this Git repository are a how-to example,
+and not an officially supported "product" by TEMENOS The Banking Software Company.
+
 Originally created by Michael Vorburger on April 29th, 2015.
 
 
