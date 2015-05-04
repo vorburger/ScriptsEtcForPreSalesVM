@@ -8,7 +8,8 @@ MAINTAINER Michael Vorburger <mvorburger@temenos.com>
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
-ENV DEBIAN_FRONTEND noninteractive
+# Workaround for https://github.com/docker/docker/issues/9299
+ENV TERM xterm
 
 # Do apt stuff here, not in the prepare.sh, so that Docker can cache this part!
 # https://docs.docker.com/articles/dockerfile_best-practices/ :

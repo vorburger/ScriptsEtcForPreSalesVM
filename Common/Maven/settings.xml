@@ -4,6 +4,7 @@
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
   <offline>true</offline>
-  <localRepository>${user.home}/PreSalesDS/t24-binaries</localRepository>
+  <!-- Let's just use standard default ~/.m2 ... simpler -->
+  <!-- <localRepository>${user.home}/PreSalesDS/t24-binaries</localRepository> -->
 
 </settings>
