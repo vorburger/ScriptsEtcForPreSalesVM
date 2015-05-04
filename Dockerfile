@@ -8,6 +8,21 @@ MAINTAINER Michael Vorburger <mvorburger@temenos.com>
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
+ENV DEBIAN_FRONTEND noninteractive
+
+# Do apt stuff here, not in the prepare.sh, so that Docker can cache this part!
+# https://docs.docker.com/articles/dockerfile_best-practices/ :
+# Avoid RUN apt-get upgrade or apt-get dist-upgrade -y --no-install-recommends
+# Don’t do RUN apt-get update on a single line  (but along with apt-get install)
+RUN DEBIAN_FRONTEND=noninteractive \
+   apt-get update && apt-get install -y --no-install-recommends \
+       	nano \
+        psmisc \
+        unzip \
+        supervisor \
+        subversion \
+   && apt-get autoremove && apt-get autoclean && apt-get clean \
+   && rm -rf /var/lib/apt/lists/*
 
 # Use COPY for local files & directories
 # and ADD for both local as well as http://... *.tar file auto-extraction into the image
