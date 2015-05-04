@@ -31,6 +31,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
 # NOTE Only *.tar.gz seem to work for ADD, not *.zip :(
 COPY . /build
 ADD Downloads/apache-maven-3.3.3-bin.tar.gz /root/
+ADD Downloads/base_mb_t24brpdev_7.tar.gz /root/
 RUN /build/prepare.sh
 
 # TODO VOLUME for where the stuff to keep is

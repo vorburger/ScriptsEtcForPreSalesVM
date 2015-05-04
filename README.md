@@ -1,6 +1,6 @@
 build.sh
 
-docker run -p 8080:8080 dsdemo
+docker run -p 8080:8080 -p 3690:3690 dsdemo
 ...
 docker stop ...
 docker ps -a
