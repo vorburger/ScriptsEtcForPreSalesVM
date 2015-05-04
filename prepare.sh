@@ -14,7 +14,7 @@ export LC_ALL=C
 # Now finally the real stuff.. ;-)
 # Set up Jenkins
 mkdir /root/Jenkins
-# curl -L http://mirrors.jenkins-ci.org/war/latest/jenkins.war -o /root/Jenkins/jenkins.war 
+# curl -L http://mirrors.jenkins-ci.org/war/latest/jenkins.war -o /root/Jenkins/jenkins.war
 mv /build/Downloads/jenkins.war /root/Jenkins/jenkins.war
 # Run Hudson once during image creation, so that it's faster first time?
 # RUN java -jar hudson.war
@@ -31,6 +31,18 @@ cd /root/
 svnadmin create DemoSVNServer
 mv /build/Common/Subversion/svnserve.conf /root/DemoSVNServer/conf/
 mv /build/Common/Subversion/passwds /root/DemoSVNServer/conf/
+
+# Create sample project from DS template and stick it into SVN
+# TODO Why is plugin version 1.0.4 hard-coded required here, it doesn't work without, but not in
+#    https://github.com/TemenosDS/DS/blob/master/t24-binaries/build-t24binaries.xml ?
+# MINOR Does not work -o offline, because not all dependencies of maven-template-plugin are in repo.. :(
+/root/apache-maven-3.3.3/bin/mvn com.odcgroup.maven.plugin:maven-template-plugin:1.0.4:generate \
+	-DtemplateGroupId=com.temenos.ds.t24-template -DtemplateArtifactId=t24-packager-tafj \
+	-DinteractiveMode=false -Dtarget=/tmp/ProjectsFromTemplate \
+	-DtemplateVersion=2015.06.0-SNAPSHOT
+svn import --username developer1 --password developer1 /tmp/ProjectsFromTemplate \
+	file://$PWD/DemoSVNServer/t24-packager-tafj/ \
+	-m "Initial commit of projects created from t24-packager-tafj template"
 
 # Set up Supervisor
 mkdir -p /var/log/supervisor
