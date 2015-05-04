@@ -7,8 +7,7 @@ export DEBIAN_FRONTEND=noninteractive
 minimal_apt_get_install='apt-get install -y --no-install-recommends'
 
 # https://docs.docker.com/articles/dockerfile_best-practices/ :
-# Avoid RUN apt-get upgrade or dist-upgrade
-# apt-get dist-upgrade -y --no-install-recommends
+# Avoid RUN apt-get upgrade or apt-get dist-upgrade -y --no-install-recommends
 # Don’t do RUN apt-get update on a single line  (but along with apt-get install)
 apt-get update && $minimal_apt_get_install \
 	nano \
@@ -36,6 +35,13 @@ mkdir /root/Jenkins
 mv /build/Downloads/jenkins.war /root/Jenkins/jenkins.war
 # Run Hudson once during image creation, so that it's faster first time?
 # RUN java -jar hudson.war
+
+# Set up Maven
+mv /build/Common/Maven/settings.xml /root/apache-maven-3.3.3/conf/
+# Set up Maven repository
+mkdir -p /root/.m2/repository/ && \
+	mv /build/Downloads/p2.oams.com/dist/latest/master/t24-binaries*.zip /root/.m2/repository/ && \
+	cd /root/.m2/repository/ && unzip t24-binaries*.zip && rm /root/.m2/repository/t24-binaries*.zip
 
 # Set up SVN
 cd /root/

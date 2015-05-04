@@ -9,14 +9,18 @@ MAINTAINER Michael Vorburger <mvorburger@temenos.com>
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
 
+# Use COPY for local files & directories
+# and ADD for both local as well as http://... *.tar file auto-extraction into the image
+# NOTE To unpack a compressed archive, the destination directory must end with a trailing slash
+# NOTE Only *.tar.gz seem to work for ADD, not *.zip :(
 COPY . /build
+ADD Downloads/apache-maven-3.3.3-bin.tar.gz /root/
 RUN /build/prepare.sh
-
-# Use ADD for both local as well as http://... *.tar file auto-extraction into the image
-# ADD *.tar.gz / 
 
 # TODO VOLUME for where the stuff to keep is
 
 # CMD ["java", "-jar", "/root/Jenkins/jenkins.war"]
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
 EXPOSE 8080
+EXPOSE 3690
