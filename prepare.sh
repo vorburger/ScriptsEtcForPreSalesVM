@@ -11,11 +11,10 @@ export LC_ALL=C
 # echo -n en_US.UTF-8 > /etc/container_environment/LANG
 # echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
 
-# Now finally the real stuff.. ;-)
 # Set up Jenkins
 mkdir /root/Jenkins
-# curl -L http://mirrors.jenkins-ci.org/war/latest/jenkins.war -o /root/Jenkins/jenkins.war
 mv /build/Downloads/jenkins.war /root/Jenkins/jenkins.war
+mv /build/Common/Jenkins /root/.jenkins
 # Run Hudson once during image creation, so that it's faster first time?
 # RUN java -jar hudson.war
 
