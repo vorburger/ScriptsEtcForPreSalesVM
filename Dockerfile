@@ -22,6 +22,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
         unzip \
         supervisor \
         subversion \
+	openssh-server \
    && apt-get autoremove && apt-get autoclean && apt-get clean \
    && rm -rf /var/lib/apt/lists/*
 
@@ -38,10 +39,25 @@ ADD Downloads/base_mb_t24brpdev_7.tar.gz /root/
 
 ENV JAVA_HOME  /usr/lib/jvm/java-7-openjdk-amd64
 ENV M2_HOME    /root/apache-maven-3.3.3/
-ENV T24MB_HOME /root/base_mb_t24brpdev_7/
+ENV T24MB_HOME /root/base_mb_t24brpdev_7
 ENV TAFJ_HOME  $T24MB_HOME/TAFJ
 ENV JBOSS_HOME $T24MB_HOME/jboss
 ENV PATH       $TAFJ_HOME/bin:$M2_HOME/bin:$PATH
+
+# Set-up sshd, as per https://docs.docker.com/examples/running_ssh_service/
+RUN mkdir /var/run/sshd
+RUN echo 'root:demo' | chpasswd
+RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+# as explained on the docker.com doc page page, we need to REPEAT all of our ENV here
+RUN echo "# https://docs.docker.com/examples/running_ssh_service/" >>/etc/profile
+RUN echo "export JAVA_HOME=${JAVA_HOME}" >> /etc/profile
+RUN echo "export M2_HOME=${M2_HOME}" >> /etc/profile
+RUN echo "export T24MB_HOME=${T24MB_HOME}" >> /etc/profile
+RUN echo "export TAFJ_HOME=${TAFJ_HOME}" >> /etc/profile
+RUN echo "export JBOSS_HOME=${JBOSS_HOME}" >> /etc/profile
+RUN echo "export PATH=${PATH}" >> /etc/profile
 
 RUN /build/prepare.sh
 # RUN /build/integrationtest.sh
