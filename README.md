@@ -10,7 +10,8 @@ docker exec -it bash
 
 NOTE: You probably do *NOT* mean to "docker run" again, as that will create _another_ Container of the same Image.
 
-Inspired parially by https://github.com/phusion/baseimage-docker
+Inspired partially by https://github.com/phusion/baseimage-docker;
+note in particular what it says re. docker exec bash vs. sshd etc.
 
 Caveat emptor: The documentation and scripts in this Git repository are a how-to example,
 and not an officially supported "product" by TEMENOS The Banking Software Company.

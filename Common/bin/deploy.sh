@@ -3,12 +3,12 @@ set -e
 # Print commands and their arguments as they are executed, so you see what's happening.
 set -x
 
-export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
-
-# Must use absolute instead of relative path here
-MB_HOME=/home/mvorburger/PreSalesDS/base_mb_t24brpdev_7
-export TAFJ_HOME=$MB_HOME/TAFJ
-export PATH=$TAFJ_HOME/bin:$PATH
+## Must use absolute instead of relative path here
+# Not needed within Docker VM, as we've already globally set these (@see Dockerfile)
+# export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+# MB_HOME=/home/mvorburger/PreSalesDS/base_mb_t24brpdev_7
+# export TAFJ_HOME=$MB_HOME/TAFJ
+# export PATH=$TAFJ_HOME/bin:$PATH
 
 export T24_HOME=$MB_HOME/h2/UD
 export PACKAGE=$T24_HOME/package

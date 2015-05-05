@@ -1,7 +1,7 @@
 FROM java:7
 # Using java:7 builds faster than using ubuntu:latest and adding openjdk-7-jdk ourselves
 # BUT it's bigger as it include bzr, Perl, Python, which we don't actually need..
-# Also this is OpenJDK, OK for dev; but for a production image with Oracle JDK,
+# Also this is OpenJDK; OK for dev, but for a production image with Oracle JDK,
 # you may wish to use sth. like https://github.com/gratiartis/dockerfiles/blob/master/oraclejdk8/Dockerfile.
 
 MAINTAINER Michael Vorburger <mvorburger@temenos.com>
@@ -25,6 +25,9 @@ RUN DEBIAN_FRONTEND=noninteractive \
    && apt-get autoremove && apt-get autoclean && apt-get clean \
    && rm -rf /var/lib/apt/lists/*
 
+# This is needed for the TAFj/bin scripts who use ksh
+RUN ln -s /bin/bash /bin/ksh
+
 # Use COPY for local files & directories
 # and ADD for both local as well as http://... *.tar file auto-extraction into the image
 # NOTE To unpack a compressed archive, the destination directory must end with a trailing slash
@@ -33,13 +36,29 @@ COPY . /build
 ADD Downloads/apache-maven-3.3.3-bin.tar.gz /root/
 ADD Downloads/base_mb_t24brpdev_7.tar.gz /root/
 
+ENV JAVA_HOME  /usr/lib/jvm/java-7-openjdk-amd64
+ENV M2_HOME    /root/apache-maven-3.3.3/
+ENV T24MB_HOME /root/base_mb_t24brpdev_7/
+ENV TAFJ_HOME  $T24MB_HOME/TAFJ
+ENV JBOSS_HOME $T24MB_HOME/jboss
+ENV PATH       $TAFJ_HOME/bin:$M2_HOME/bin:$PATH
+
 RUN /build/prepare.sh
-RUN /build/integrationtest.sh
+# RUN /build/integrationtest.sh
 RUN rm -rf /build /tmp/* /var/tmp/*
 
 # TODO VOLUME for where the stuff to keep is
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
+# 8080 = Jenkins http://
 EXPOSE 8080
+
+# 3690 = Subversion svn://
 EXPOSE 3690
+
+# 9001 = Supervisor http://
+EXPOSE 9001
+
+# 9089 = JBoss T24 http://
+EXPOSE 9089
