@@ -34,11 +34,11 @@ RUN ln -s /bin/bash /bin/ksh
 # NOTE To unpack a compressed archive, the destination directory must end with a trailing slash
 # NOTE Only *.tar.gz seem to work for ADD, not *.zip :(
 COPY . /build
-ADD Downloads/apache-maven-3.3.3-bin.tar.gz /root/
+ADD Downloads/apache-maven-3.0.4-bin.tar.gz /root/
 ADD Downloads/base_mb_t24brpdev_7.tar.gz /root/
 
 ENV JAVA_HOME  /usr/lib/jvm/java-7-openjdk-amd64
-ENV M2_HOME    /root/apache-maven-3.3.3/
+ENV M2_HOME    /root/apache-maven-3.0.4/
 ENV T24MB_HOME /root/base_mb_t24brpdev_7
 ENV TAFJ_HOME  $T24MB_HOME/TAFJ
 ENV JBOSS_HOME $T24MB_HOME/jboss
@@ -60,7 +60,7 @@ RUN echo "export JBOSS_HOME=${JBOSS_HOME}" >> /etc/profile
 RUN echo "export PATH=${PATH}" >> /etc/profile
 
 RUN /build/prepare.sh
-# RUN /build/integrationtest.sh
+RUN /build/integrationtest.sh
 RUN rm -rf /build /tmp/* /var/tmp/*
 
 # TODO VOLUME for where the stuff to keep is

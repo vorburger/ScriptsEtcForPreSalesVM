@@ -29,7 +29,7 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <rootPOM>ft-modelbank-packager/module/pom.xml</rootPOM>
-  <goals>clean package -DtafjHome=/root/base_mb_t24brpdev_7/TAFJ</goals>
+  <goals>-o clean package -DtafjHome=/root/base_mb_t24brpdev_7/TAFJ -DinsertDir=/root/base_mb_t24brpdev_7/h2/UD/T24_BP/ -Dlib.dir=/root/base_mb_t24brpdev_7/jboss/modules/com/temenos/t24/main/ -Dds.ignoreValidationErrors=false</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <ignoreUpstremChanges>false</ignoreUpstremChanges>

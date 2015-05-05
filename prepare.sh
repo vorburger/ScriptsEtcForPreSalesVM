@@ -12,13 +12,13 @@ export LC_ALL=C
 # echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
 
 # Set up Maven
-mv /build/Common/Maven/settings*.xml /root/apache-maven-3.3.3/conf/
+mv /build/Common/Maven/settings*.xml $M2_HOME/conf/
 # Set up Maven repository
 mkdir -p /root/.m2/repository/ && \
 	mv /build/Downloads/p2.oams.com/dist/latest/master/t24-binaries*.zip /root/.m2/repository/ && \
 	cd /root/.m2/repository/ && unzip t24-binaries*.zip && rm /root/.m2/repository/t24-binaries*.zip
 # Hack fix for strange problem wherein an <offline> in $M2_HOME/conf is ignored?!
-# TODO later, cp /root/apache-maven-3.3.3/conf/settings.xml /root/.m2/
+# TODO later, cp $M2_HOME/conf/settings.xml /root/.m2/
 
 # Set up SVN
 cd /root/
@@ -32,7 +32,7 @@ mv /build/Common/Subversion/passwds /root/DemoSVNServer/conf/
 # TODO Does not work -o offline, because not all dependencies of maven-template-plugin are in repo.. :(
 #   More specifically, they are, but in other versions, depending on the super POM of our local Mvn ver.
 ls -l /root/.m2/repository/com/odcgroup/maven/plugin/maven-template-plugin/1.0.4
-/root/apache-maven-3.3.3/bin/mvn -s /root/apache-maven-3.3.3/conf/settings-online.xml \
+mvn -s $M2_HOME/conf/settings-online.xml \
         com.odcgroup.maven.plugin:maven-template-plugin:1.0.4:generate \
 	-DtemplateGroupId=com.temenos.ds.t24-template -DtemplateArtifactId=t24-packager-tafj \
 	-DinteractiveMode=false -Dtarget=/tmp/ProjectsFromTemplate \
