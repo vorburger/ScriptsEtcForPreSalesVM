@@ -15,7 +15,7 @@ export LC_ALL=C
 mv /build/Common/Maven/settings*.xml $M2_HOME/conf/
 # Set up Maven repository
 mkdir -p /root/.m2/repository/ && \
-	mv /build/Downloads/p2.oams.com/dist/latest/master/t24-binaries*.zip /root/.m2/repository/ && \
+	mv /build/Downloads/t24-binaries*.zip /root/.m2/repository/ && \
 	cd /root/.m2/repository/ && unzip t24-binaries*.zip && rm /root/.m2/repository/t24-binaries*.zip
 # Hack fix for strange problem wherein an <offline> in $M2_HOME/conf is ignored?!
 # TODO later, cp $M2_HOME/conf/settings.xml /root/.m2/
