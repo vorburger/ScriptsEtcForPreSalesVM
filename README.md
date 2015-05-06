@@ -1,4 +1,4 @@
-Docker.com scripts for Design Studio for T24 Continous Integration (CI) "DevOps" demo environment.
+Docker.com scripts for TEMENOS Design Studio for T24 Continous Integration (CI) "DevOps" demo environment.
 
 ## How to build
 
