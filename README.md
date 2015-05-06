@@ -10,7 +10,8 @@ Docker.com scripts for TEMENOS Design Studio for T24 Continous Integration (CI) 
     ...
     docker start ...
     
-    docker exec -it bash
+You typically want to run "docker run" once, and then "start" it N times.  
+(Each "docker run" will create _another_ Container of the same Image.)
 
 ## Available services
 * Subversion: svn://developer1@localhost, password "developer1" (uses TCP/IP port 3690)
@@ -21,15 +22,11 @@ Docker.com scripts for TEMENOS Design Studio for T24 Continous Integration (CI) 
   * T24 TAFj scripts, e.g. DBTools
 * Supervisor: http://localhost:9001
 
-NOTE: You typically want to run "docker run" once, and then "start" it N times.  
-(Each "docker run" will create _another_ Container of the same Image.)
+## PS
 
 Caveat emptor: The documentation and scripts in this Git repository are provided "as is",
 just a how-to example, and not an officially supported "product" by 
-TEMENOS The Banking Software Company.  See LICENSE.txt
-
-Docker stuff partially inspired by https://github.com/phusion/baseimage-docker;
-note in particular what it says re. docker exec bash vs. sshd etc.
+TEMENOS The Banking Software Company.  See [LICENSE.txt](LICENSE.txt)
 
 Originally started by Michael Vorburger on April 29th, 2015.
 
