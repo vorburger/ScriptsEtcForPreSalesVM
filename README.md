@@ -1,4 +1,6 @@
-How to build
+Docker.com scripts for Design Studio for T24 Continous Integration (CI) "DevOps" demo environment.
+
+## How to build
 
     build.sh
     docker run -d -p 8080:8080 -p 3690:3690 -p 9001:9001 -p 2222:2222 -p 9089:9089 dsdemo
