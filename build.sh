@@ -9,6 +9,8 @@ wget -cN http://archive.apache.org/dist/maven/maven-3/3.0.4/binaries/apache-mave
 wget -cN -r -l1 "http://p2.oams.com/dist/latest/master/" -A "t24-binaries*.zip" -O t24-binaries_LATEST.zip
 # TODO wget http://cloud-ivy.temenosgroup.com/build/utp/UTP_Build_Latest.7z
 # unzip UTP_Build_Latest.7z
+# rm -rf UTP_Build_Latest/EDS
+# rm -rf UTP_Build_Latest/Java
 # ./fix_utp.sh UTP_Build_Latest
 cd -
 
