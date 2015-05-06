@@ -3,7 +3,7 @@ Docker.com scripts for TEMENOS Design Studio for T24 Continous Integration (CI) 
 ## How to build
 
     build.sh
-    docker run -d -p 8080:8080 -p 3690:3690 -p 9001:9001 -p 2222:2222 -p 9089:9089 dsdemo
+    docker run -d -p 8080:8080 -p 3690:3690 -p 9001:9001 -p 2222:2222 -p 9089:9089 -p 10999:10999 dsdemo
     ...
     docker stop ...
     docker ps -a

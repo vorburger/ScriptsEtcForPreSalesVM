@@ -76,5 +76,8 @@ EXPOSE 3690
 # 9001 = Supervisor http://
 EXPOSE 9001
 
-# 9089 = JBoss T24 http://
+# 9089 = JBoss T24 BrowserWeb etc. http://
 EXPOSE 9089
+
+# 10999 = JBoss Management UI http://
+EXPOSE 10999
