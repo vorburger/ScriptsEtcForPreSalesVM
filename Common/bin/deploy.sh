@@ -6,11 +6,10 @@ set -x
 ## Must use absolute instead of relative path here
 # Not needed within Docker VM, as we've already globally set these (@see Dockerfile)
 # export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
-# MB_HOME=/home/mvorburger/PreSalesDS/base_mb_t24brpdev_7
 # export TAFJ_HOME=$MB_HOME/TAFJ
 # export PATH=$TAFJ_HOME/bin:$PATH
 
-export T24_HOME=$MB_HOME/h2/UD
+export T24_HOME=$T24MB_HOME/h2/UD
 export PACKAGE=$T24_HOME/package
 export DS_PACKAGE_UPDATES=$T24_HOME/DSPackageUpdates
 rm -rf $PACKAGE; mkdir $PACKAGE

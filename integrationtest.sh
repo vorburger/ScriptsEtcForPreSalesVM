@@ -13,6 +13,7 @@ done
 # Now lets build our Job, and fail if that doesn't work
 wget http://localhost:8080/jnlpJars/jenkins-cli.jar -P /tmp
 java -jar /tmp/jenkins-cli.jar -s http://localhost:8080/ build DemoBuildPackage -f -s -v -w
+java -jar /tmp/jenkins-cli.jar -s http://localhost:8080/ build DemoDeployPackage -f -s -v -w
 
 # Shutdown SupervisorD (via its PID, as its the last started background process)
 # This will in turn of course shut down Jenkins, SVN etc.

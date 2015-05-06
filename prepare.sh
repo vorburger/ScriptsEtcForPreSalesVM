@@ -11,6 +11,9 @@ export LC_ALL=C
 # echo -n en_US.UTF-8 > /etc/container_environment/LANG
 # echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
 
+# Copy any bin/ scripts which we want in the VM (not just to prepare it, such as this one)
+mv /build/Common/bin /root
+
 # Set up Maven
 mv /build/Common/Maven/settings*.xml $M2_HOME/conf/
 # Set up Maven repository
