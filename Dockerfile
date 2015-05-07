@@ -23,8 +23,11 @@ RUN DEBIAN_FRONTEND=noninteractive \
         supervisor \
         subversion \
 	openssh-server \
-   && apt-get autoremove && apt-get autoclean && apt-get clean \
-   && rm -rf /var/lib/apt/lists/*
+   && apt-get autoremove && apt-get autoclean && apt-get clean
+
+# Do NOT \ && rm -rf /var/lib/apt/lists/* (as other Dockerfile sometimes do),
+# because saving a few bits here but then not being able to install additional
+# packages during run-time (useful for debugging sometimes) is more pain than gain.
 
 # This is needed for the TAFj/bin scripts who use ksh
 RUN ln -s /bin/bash /bin/ksh
