@@ -67,6 +67,9 @@ RUN rm -rf /build /tmp/* /var/tmp/*
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
+# 2222 = SSHd ssh://
+EXPOSE 2222
+
 # 8080 = Jenkins http://
 EXPOSE 8080
 

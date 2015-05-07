@@ -29,6 +29,7 @@ just a how-to example, and not an officially supported "product" by
 TEMENOS The Banking Software Company.  See [LICENSE.txt](LICENSE.txt)
 
 Originally started by Michael Vorburger on April 29th, 2015.
-http://blog2.vorburger.ch/2015/05/docker-based-virtual-machine-for-demos.html
+* http://blog2.vorburger.ch/2015/05/docker-based-virtual-machine-for-demos.html
+* https://www.youtube.com/watch?v=wdWll0vpE1U
 
 Contributions via open source pull requests most welcome.
