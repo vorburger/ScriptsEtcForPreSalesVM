@@ -15,4 +15,4 @@ dos2unix $1/TAFJ/bin/*
 sed -i 's/\\/\//g' $1/TAFJ/conf/tafj.properties
 
 # https://github.com/temenostech/Hothouse/issues/162 is *STILL* NOK :-(
-mv Downloads/Temenos/jboss/modules/com/temenos/t24/main/Module.xml Downloads/Temenos/jboss/modules/com/temenos/t24/main/module.xml
+mv $1/jboss/modules/com/temenos/t24/main/Module.xml $1/jboss/modules/com/temenos/t24/main/module.xml

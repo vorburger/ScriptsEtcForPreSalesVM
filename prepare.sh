@@ -50,5 +50,6 @@ mv /build/Downloads/jenkins.war /root/Jenkins/jenkins.war
 mv /build/Common/Jenkins /root/.jenkins
 
 # Set up Supervisor
+mkdir -p /supervisord.logs
 mkdir -p /var/log/supervisor
 cp /build/Common/Supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf

@@ -1,4 +1,6 @@
-FROM java:7
+# FROM java:7 no? Debian instead ubuntu??
+FROM ubuntu:latest
+
 # Using java:7 builds faster than using ubuntu:latest and adding openjdk-7-jdk ourselves
 # BUT it's bigger as it include bzr, Perl, Python, which we don't actually need..
 # Also this is OpenJDK; OK for dev, but for a production image with Oracle JDK,
@@ -25,6 +27,13 @@ RUN DEBIAN_FRONTEND=noninteractive \
 	openssh-server \
    && apt-get autoremove && apt-get autoclean && apt-get clean
 
+# TODO clean-up, use proper syntax as per above..
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:webupd8team/java
+RUN apt-get update
+RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+RUN apt-get install -y oracle-java7-installer
+
 # Do NOT \ && rm -rf /var/lib/apt/lists/* (as other Dockerfile sometimes do),
 # because saving a few bits here but then not being able to install additional
 # packages during run-time (useful for debugging sometimes) is more pain than gain.
@@ -38,11 +47,12 @@ RUN ln -s /bin/bash /bin/ksh
 # NOTE Only *.tar.gz seem to work for ADD, not *.zip :(
 COPY . /build
 ADD Downloads/apache-maven-3.0.4-bin.tar.gz /root/
-ADD Downloads/base_mb_t24brpdev_7.tar.gz /root/
+COPY Downloads/Temenos /root/Temenos
 
-ENV JAVA_HOME  /usr/lib/jvm/java-7-openjdk-amd64
+# NOTE: Any new ENV here must also be added in the RUN echo section below..
+ENV JAVA_HOME  /usr/lib/jvm/java-7-oracle
 ENV M2_HOME    /root/apache-maven-3.0.4/
-ENV T24MB_HOME /root/base_mb_t24brpdev_7
+ENV T24MB_HOME /root/Temenos
 ENV TAFJ_HOME  $T24MB_HOME/TAFJ
 ENV JBOSS_HOME $T24MB_HOME/jboss
 ENV PATH       $TAFJ_HOME/bin:$M2_HOME/bin:$PATH
@@ -63,7 +73,7 @@ RUN echo "export JBOSS_HOME=${JBOSS_HOME}" >> /etc/profile
 RUN echo "export PATH=${PATH}" >> /etc/profile
 
 RUN /build/prepare.sh
-RUN /build/integrationtest.sh
+# RUN /build/integrationtest.sh
 RUN rm -rf /build /tmp/* /var/tmp/*
 
 # TODO VOLUME for where the stuff to keep is
@@ -87,3 +97,6 @@ EXPOSE 9089
 
 # 10999 = JBoss Management UI http://
 EXPOSE 10999
+
+# 8787 = JBoss JVM default debugging port for remote attaching
+EXPOSE 8787

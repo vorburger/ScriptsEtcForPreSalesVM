@@ -3,7 +3,7 @@ Docker.com scripts for TEMENOS Design Studio for T24 Continous Integration (CI) 
 ## How to build
 
     build.sh
-    docker run -d -p 8080:8080 -p 3690:3690 -p 9001:9001 -p 2222:2222 -p 9089:9089 -p 10999:10999 dsdemo
+    docker run -d -p 8080:8080 -p 3690:3690 -p 9001:9001 -p 2222:2222 -p 9089:9089 -p 10999:10999 -p 8787:8787 dsdemo
     ...
     docker stop ...
     docker ps -a
@@ -21,6 +21,7 @@ You typically want to run "docker run" once, and then "start" it N times.
   * T24 Classic: tRun -cf tafj EX
   * T24 TAFj scripts, e.g. DBTools
 * Supervisor: http://localhost:9001
+* Java Remote Debugging: port 8787
 
 ## PS
 
