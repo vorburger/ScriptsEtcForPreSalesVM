@@ -2,19 +2,15 @@
 set -e
 set -x
 
-export LC_ALL=C
-
-# Fix locale.
-# $minimal_apt_get_install language-pack-en
-# locale-gen en_US
-# update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
-# echo -n en_US.UTF-8 > /etc/container_environment/LANG
-# echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
-
 # Copy any bin/ scripts which we want in the VM (not just to prepare it, such as this one)
 mv /build/Common/bin /root
 
+# Model Bank
+mv /build/Downloads/Temenos /root
+
 # Set up Maven
+mkdir $M2_HOME
+tar -xvf /build/Downloads/apache-maven-*-bin.tar.gz -C /root
 mv /build/Common/Maven/settings*.xml $M2_HOME/conf/
 # Set up Maven repository
 mkdir -p /root/.m2/repository/ && \

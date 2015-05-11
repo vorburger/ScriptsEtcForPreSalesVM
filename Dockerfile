@@ -6,7 +6,18 @@ FROM ubuntu:latest
 MAINTAINER Michael Vorburger <mvorburger@temenos.com>
 
 # Default to UTF-8 file.encoding
-ENV LANG C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+ENV LC_ALL C.UTF-8
+# Fix locale (not 100% what of this is needed why, and whether on both base Debian and/or Ubuntu, but doesn't hurt)
+RUN apt-get install -y --no-install-recommends language-pack-en && \
+    locale-gen en_US && \
+    update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8 && \
+# This is from the phusion/baseimage-docker, probably not needed here? Keeping just in case.
+    mkdir /etc/container_environment && \
+    echo -n en_US.UTF-8 > /etc/container_environment/LANG && \
+    echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
+
 # Workaround for https://github.com/docker/docker/issues/9299
 ENV TERM xterm
 
@@ -29,7 +40,7 @@ RUN apt-get install -y --no-install-recommends software-properties-common && \
         subversion \
         openssh-server \
         oracle-java7-installer \
-   && apt-get autoremove && apt-get autoclean && apt-get clean
+   && apt-get autoremove && apt-get autoclean && apt-get clean -y
 
 # Do NOT \ && rm -rf /var/lib/apt/lists/* (as other Dockerfile sometimes do),
 # because saving a few bits here but then not being able to install additional
@@ -43,10 +54,8 @@ RUN ln -s /bin/bash /bin/ksh
 # NOTE To unpack a compressed archive, the destination directory must end with a trailing slash
 # NOTE Only *.tar.gz seem to work for ADD, not *.zip :(
 COPY . /build
-ADD Downloads/apache-maven-3.0.4-bin.tar.gz /root/
-COPY Downloads/Temenos /root/Temenos
 
-# NOTE: Any new ENV here must also be added in the RUN echo section below..
+# NOTE: Any new ENV here must also be added in the RUN echo section below for sshd..
 ENV JAVA_HOME  /usr/lib/jvm/java-7-oracle
 ENV M2_HOME    /root/apache-maven-3.0.4/
 ENV T24MB_HOME /root/Temenos
@@ -62,6 +71,9 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/ss
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 # as explained on the docker.com doc page page, we need to REPEAT all of our ENV here
 RUN echo "# https://docs.docker.com/examples/running_ssh_service/" >>/etc/profile
+RUN echo "export LC_ALL=${LC_ALL}" >> /etc/profile
+RUN echo "export LANG=${LANG}" >> /etc/profile
+RUN echo "export LANGUAGE=${LANGUAGE}" >> /etc/profile
 RUN echo "export JAVA_HOME=${JAVA_HOME}" >> /etc/profile
 RUN echo "export M2_HOME=${M2_HOME}" >> /etc/profile
 RUN echo "export T24MB_HOME=${T24MB_HOME}" >> /etc/profile
@@ -70,7 +82,7 @@ RUN echo "export JBOSS_HOME=${JBOSS_HOME}" >> /etc/profile
 RUN echo "export PATH=${PATH}" >> /etc/profile
 
 RUN /build/prepare.sh
-# RUN /build/integrationtest.sh
+RUN /build/integrationtest.sh
 RUN rm -rf /build /tmp/* /var/tmp/*
 
 # TODO VOLUME for where the stuff to keep is
