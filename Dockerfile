@@ -1,10 +1,7 @@
-# FROM java:7 no? Debian instead ubuntu??
 FROM ubuntu:latest
-
-# Using java:7 builds faster than using ubuntu:latest and adding openjdk-7-jdk ourselves
+# or OpenJDK: FROM java:7 <= This will be Debian base instead ubuntu
+# Using java:7 builds faster than using ubuntu:latest and adding openjdk-7-jdk or Oracle JDK ourselves
 # BUT it's bigger as it include bzr, Perl, Python, which we don't actually need..
-# Also this is OpenJDK; OK for dev, but for a production image with Oracle JDK,
-# you may wish to use sth. like https://github.com/gratiartis/dockerfiles/blob/master/oraclejdk8/Dockerfile.
 
 MAINTAINER Michael Vorburger <mvorburger@temenos.com>
 
@@ -18,21 +15,21 @@ ENV TERM xterm
 # Avoid RUN apt-get upgrade or apt-get dist-upgrade -y --no-install-recommends
 # Don’t do RUN apt-get update on a single line  (but along with apt-get install)
 # Do NOT use DEBIAN_FRONTEND=noninteractive, as per http://docs.docker.com/faq/
-RUN apt-get update && apt-get install -y --no-install-recommends \
-       	nano \
+# For Oracle JDK v7 instead of OpenJDK:
+RUN apt-get install -y --no-install-recommends software-properties-common && \
+    add-apt-repository ppa:webupd8team/java && \
+    apt-get update && \
+    echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
+    apt-get install -y --no-install-recommends \
+        nano \
+        curl \
         psmisc \
         unzip \
         supervisor \
         subversion \
-	openssh-server \
+        openssh-server \
+        oracle-java7-installer \
    && apt-get autoremove && apt-get autoclean && apt-get clean
-
-# TODO clean-up, use proper syntax as per above..
-RUN apt-get install -y software-properties-common
-RUN add-apt-repository ppa:webupd8team/java
-RUN apt-get update
-RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get install -y oracle-java7-installer
 
 # Do NOT \ && rm -rf /var/lib/apt/lists/* (as other Dockerfile sometimes do),
 # because saving a few bits here but then not being able to install additional
