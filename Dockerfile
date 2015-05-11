@@ -17,8 +17,8 @@ ENV TERM xterm
 # https://docs.docker.com/articles/dockerfile_best-practices/ :
 # Avoid RUN apt-get upgrade or apt-get dist-upgrade -y --no-install-recommends
 # Don’t do RUN apt-get update on a single line  (but along with apt-get install)
-RUN DEBIAN_FRONTEND=noninteractive \
-   apt-get update && apt-get install -y --no-install-recommends \
+# Do NOT use DEBIAN_FRONTEND=noninteractive, as per http://docs.docker.com/faq/
+RUN apt-get update && apt-get install -y --no-install-recommends \
        	nano \
         psmisc \
         unzip \
