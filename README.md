@@ -3,7 +3,7 @@ Docker.com scripts for TEMENOS Design Studio for T24 Continous Integration (CI) 
 ## How to build
 
     build.sh
-    docker run -d -p 8080:8080 -p 3690:3690 -p 9001:9001 -p 2222:2222 -p 9089:9089 -p 10999:10999 -p 8787:8787 dsdemo
+    docker run -d -p 8080:8080 -p 3690:3690 -p 9001:9001 -p 2222:2222 -p 7070:7070 -p 10999:10999 -p 8787:8787 dsdemo
     ...
     docker stop ...
     docker ps -a
@@ -15,8 +15,8 @@ You typically want to run "docker run" once, and then "start" it N times.
 
 ## Available services
 * Subversion: svn://developer1@localhost, password "developer1" (uses TCP/IP port 3690)
-* Jenkins: http://localhost:8080
-* T24 Browser: http://localhost:9089/BrowserWeb/ (SSOUSER1 / 123456)
+* Jenkins: http://localhost:7070
+* T24 Browser: http://localhost:8080/BrowserWeb/ (SSOUSER1 / 123456)
 * CLI Login: ssh -p 2222 root@localhost, login with password "demo"
   * T24 Classic: tRun -cf tafj EX
   * T24 TAFj scripts, e.g. DBTools

@@ -92,8 +92,8 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # 2222 = SSHd ssh://
 EXPOSE 2222
 
-# 8080 = Jenkins http://
-EXPOSE 8080
+# 7070 = Jenkins http://
+EXPOSE 7070
 
 # 3690 = Subversion svn://
 EXPOSE 3690
@@ -101,8 +101,8 @@ EXPOSE 3690
 # 9001 = Supervisor http://
 EXPOSE 9001
 
-# 9089 = JBoss T24 BrowserWeb etc. http://
-EXPOSE 9089
+# 8080 = JBoss T24 BrowserWeb etc. http:// (WAS: 9089 earlier)
+EXPOSE 8080
 
 # 10999 = JBoss Management UI http://
 EXPOSE 10999
