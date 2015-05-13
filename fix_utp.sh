@@ -16,6 +16,8 @@ sed -i 's/\\/\//g' $1/TAFJ/conf/tafj.properties
 
 # Another Windows/Linux cross platform issue.. it's wrong to catch up one-by-one; the package used should use the TAFJ Maven plug-in to create the TAFJ home instead :(
 sed -i 's/Primary.jar;/Primary.jar:/g' $1/TAFJ/conf/tafj.properties
+# Actually, OMG! This JAR *duplicates* T24 classes and can never work, so rm:
+rm $1/jboss/modules/com/temenos/t24/main/Primary.jar
 
 # https://github.com/temenostech/Hothouse/issues/162 is *STILL* NOK :-(
 mv $1/jboss/modules/com/temenos/t24/main/Module.xml $1/jboss/modules/com/temenos/t24/main/module.xml
